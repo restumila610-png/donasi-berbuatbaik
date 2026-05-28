@@ -1,0 +1,54 @@
+document.addEventListener("DOMContentLoaded", function () {
+    // 1. Ambil semua elemen tombol dan halaman yang dibutuhkan
+    const openDonationBtn = document.getElementById("open-donation-btn");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const donationModal = document.getElementById("donation-modal");
+    const submitDonationBtn = document.getElementById("submit-donation-btn");
+    const successPage = document.getElementById("success-page");
+    const backHomeBtn = document.getElementById("back-home-btn");
+    const proofFileInput = document.getElementById("proof-file");
+
+    // 2. Fungsi untuk membuka Pop-up QRIS & Form (Halaman 2)
+    if (openDonationBtn && donationModal) {
+        openDonationBtn.addEventListener("click", function () {
+            donationModal.style.display = "block";
+            // Otomatis scroll ke bagian atas pop-up agar rapi
+            donationModal.scrollTop = 0; 
+        });
+    }
+
+    // 3. Fungsi untuk menutup Pop-up QRIS jika tombol Tutup [X] diklik
+    if (closeModalBtn && donationModal) {
+        closeModalBtn.addEventListener("click", function () {
+            donationModal.style.display = "none";
+        });
+    }
+
+    // 4. Fungsi ketika tombol KONFIRMASI DONASI diklik (Halaman 3)
+    if (submitDonationBtn && successPage) {
+        submitDonationBtn.addEventListener("click", function () {
+            // Validasi: Cek apakah user sudah memilih/upload foto bukti transfer
+            if (proofFileInput && proofFileInput.files.length === 0) {
+                alert("Harap pilih dan upload foto bukti transfer Anda terlebih dahulu!");
+                return;
+            }
+
+            // Jika sudah ada file, sembunyikan modal form dan munculkan halaman sukses bernuansa hitam/emas
+            if (donationModal) {
+                donationModal.style.display = "none";
+            }
+            successPage.style.display = "flex";
+        });
+    }
+
+    // 5. Fungsi tombol kembali ke Halaman Utama dari halaman sukses
+    if (backHomeBtn && successPage) {
+        backHomeBtn.addEventListener("click", function () {
+            successPage.style.display = "none";
+            // Reset input file agar form kembali bersih jika ingin dipakai lagi
+            if (proofFileInput) {
+                proofFileInput.value = "";
+            }
+        });
+    }
+});
